@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unplug Your Brain — A System for Breaking Free from Screens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a1628;
+      --bg-mid: #121f33;
+      --bg-card: #1a2a42;
+      --text-primary: #e8f0f8;
+      --text-secondary: #8fa3ba;
+      --text-muted: #5a7088;
+      --accent-blue: #7eb8d8;
+      --accent-glow: #4a9cc7;
+      --accent-warm: #d4a574;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Starfield background */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Main content wrapper */
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: radial-gradient(ellipse at 50% 0%, #1a3050 0%, var(--bg-deep) 70%);
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text {
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-tagline {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent-blue);
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--accent-blue);
+      color: var(--bg-deep);
+      padding: 1rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 24px rgba(126, 184, 216, 0.3);
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(126, 184, 216, 0.4);
+      background: #96c8e4;
+    }
+
+    .hero-cta svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .hero-price {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .hero-price strong {
+      color: var(--text-primary);
+      font-size: 1.5rem;
+    }
+
+    .hero-cover {
+      position: relative;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .hero-cover img {
+      width: 100%;
+      max-width: 380px;
+      border-radius: 4px;
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 80px rgba(126, 184, 216, 0.15);
+    }
+
+    .hero-cover::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      border: 1px solid var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.2;
+    }
+
+    /* Section styling */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 600;
+      margin-bottom: 2rem;
+      line-height: 1.25;
+    }
+
+    /* Problem Section */
+    .problem {
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 100%);
+    }
+
+    .problem-text {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .problem-list {
+      list-style: none;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-card);
+      border-radius: 6px;
+      border-left: 3px solid var(--accent-warm);
+      font-size: 1.05rem;
+    }
+
+    .problem-list li::before {
+      content: '→';
+      color: var(--accent-warm);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Reframe Section */
+    .reframe {
+      background: var(--bg-mid);
+      text-align: center;
+    }
+
+    .reframe-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .reframe-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+    }
+
+    .reframe-quote em {
+      font-style: normal;
+      color: var(--accent-blue);
+    }
+
+    .reframe-explain {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* What You'll Learn */
+    .learn {
+      background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
+    }
+
+    .learn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .learn-card {
+      background: var(--bg-card);
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid rgba(126, 184, 216, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .learn-card:hover {
+      border-color: rgba(126, 184, 216, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .learn-card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(126, 184, 216, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      color: var(--accent-blue);
+      font-size: 1.5rem;
+    }
+
+    .learn-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .learn-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* About Author */
+    .author {
+      background: var(--bg-deep);
+    }
+
+    .author-content {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .author-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .author-text p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    /* Final CTA */
+    .final-cta {
+      background: radial-gradient(ellipse at 50% 100%, #1a3050 0%, var(--bg-deep) 70%);
+      text-align: center;
+      padding: 8rem 2rem;
+    }
+
+    .final-cta .section-title {
+      margin-bottom: 1rem;
+    }
+
+    .final-cta-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .final-cta .hero-cta {
+      font-size: 1.1rem;
+      padding: 1.25rem 2.5rem;
+    }
+
+    .final-cta .hero-price {
+      margin-top: 1.5rem;
+    }
+
+    .guarantee {
+      margin-top: 3rem;
+      padding: 1.5rem 2rem;
+      background: var(--bg-card);
+      border-radius: 8px;
+      display: inline-block;
+      max-width: 500px;
+    }
+
+    .guarantee p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .guarantee strong {
+      color: var(--text-primary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    footer a {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+
+    /* Bonuses */
+    .bonuses {
+      background: var(--bg-mid);
+      border-top: 1px solid rgba(126, 184, 216, 0.1);
+    }
+
+    .bonus-list {
+      list-style: none;
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .bonus-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-card);
+      border-radius: 8px;
+      border: 1px solid rgba(126, 184, 216, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .bonus-list li:hover {
+      border-color: rgba(126, 184, 216, 0.2);
+    }
+
+    .bonus-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      width: 40px;
+      text-align: center;
+    }
+
+    .bonus-list strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+    }
+
+    .bonus-list p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 3rem;
+      }
+
+      .hero-text {
+        order: 1;
+      }
+
+      .hero-cover {
+        order: 0;
+      }
+
+      .hero-cover img {
+        max-width: 280px;
+        margin: 0 auto;
+        display: block;
+      }
+
+      .hero-subtitle {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .author-content {
+        flex-direction: column;
+      }
+
+      section {
+        padding: 4rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield -->
+  <div class="stars" id="stars"></div>
+
+  <div class="content">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="hero-tagline">New Book</p>
+          <h1 class="hero-title">Stop scrolling.<br>Start <em>living</em>.</h1>
+          <p class="hero-subtitle">A practical system to break free from screen addiction—without relying on willpower or guilt.</p>
+          <a href="/buy" class="hero-cta">
+            Get the Book
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+          <p class="hero-price"><strong>$12</strong> — Instant PDF download</p>
+        </div>
+        <div class="hero-cover">
+          <img src="unplug-cover.png" alt="Unplug Your Brain book cover">
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="problem">
+      <div class="section-inner">
+        <p class="section-label">Sound familiar?</p>
+        <h2 class="section-title">You told yourself "just one more episode."</h2>
+        <p class="problem-text">And then two hours disappeared. Again. You're not lazy. You're not weak. You're caught in an engineered trap.</p>
+        <ul class="problem-list">
+          <li>You reach for your phone the moment you feel bored, anxious, or tired</li>
+          <li>Evenings vanish into Netflix, YouTube, or endless scrolling</li>
+          <li>You've tried "digital detoxes" but always slip back into old patterns</li>
+          <li>You feel foggy, scattered, and disconnected from your own life</li>
+          <li>You know something's off—but willpower alone isn't working</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Reframe -->
+    <section class="reframe">
+      <div class="reframe-inner">
+        <p class="section-label">Here's the truth</p>
+        <p class="reframe-quote">"You're not fighting a bad habit.<br>You're fighting <em>billions of dollars</em> in behavioral engineering."</p>
+        <p class="reframe-explain">Tech companies have spent decades optimizing every pixel, every notification, every autoplay to keep you hooked. This isn't a fair fight—unless you learn to design back.</p>
+      </div>
+    </section>
+
+    <!-- What You'll Learn -->
+    <section class="learn">
+      <div class="section-inner">
+        <p class="section-label">Inside the book</p>
+        <h2 class="section-title">A system that actually works</h2>
+        <div class="learn-grid">
+          <div class="learn-card">
+            <div class="learn-card-icon">⚡</div>
+            <h3>The Craving Circuit</h3>
+            <p>Understand the trigger-craving-response loop that keeps you stuck—and how to interrupt it in real time.</p>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-icon">🏗️</div>
+            <h3>Temptation Architecture</h3>
+            <p>Redesign your environment so freedom becomes the default—not a daily battle of willpower.</p>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-icon">🔄</div>
+            <h3>The Replacement Strategy</h3>
+            <p>You can't just quit—you have to substitute. Learn what actually satisfies the need screens were meeting.</p>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-icon">🧠</div>
+            <h3>Survive Withdrawal</h3>
+            <p>Phantom cravings, mental fog, mood swings—know what to expect and how to push through.</p>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-icon">🎯</div>
+            <h3>Reclaim Your Identity</h3>
+            <p>Stop being someone who "tries to quit screens" and become someone who simply doesn't need them.</p>
+          </div>
+          <div class="learn-card">
+            <div class="learn-card-icon">🛡️</div>
+            <h3>Stay Free</h3>
+            <p>Build systems, boundaries, and rituals that protect your freedom long after the novelty wears off.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Author -->
+    <section class="author">
+      <div class="section-inner">
+        <p class="section-label">About the author</p>
+        <div class="author-content">
+          <div class="author-text">
+            <h3>Matt Livingston</h3>
+            <p>This book wasn't written from the outside looking in—it was written from inside the struggle. I know what it's like to lose hours, days, even years to screens. I also know what it's like to start taking those hours back, one decision at a time.</p>
+            <p>I believe most personal problems are structural, not moral. You don't need more discipline. You need better systems.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="buy">
+      <div class="section-inner">
+        <p class="section-label">Ready to unplug?</p>
+        <h2 class="section-title">Get your life back for $12</h2>
+        <p class="final-cta-subtitle">Instant PDF download. Read it tonight. Start changing tomorrow.</p>
+        <a href="/buy" class="hero-cta">
+          Download Now — $12
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+        <p class="hero-price">PDF format • 9,800+ words • No fluff, just signal</p>
+        <div class="guarantee">
+          <p><strong>Simple guarantee:</strong> If this book doesn't help you, email me and I'll refund you. No questions, no hassle.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bonuses -->
+    <section class="bonuses">
+      <div class="section-inner">
+        <p class="section-label">Included free</p>
+        <h2 class="section-title">7 bonus resources to accelerate your escape</h2>
+        <ul class="bonus-list">
+          <li>
+            <span class="bonus-icon">📱</span>
+            <div>
+              <strong>Phone Wallpaper Pack</strong>
+              <p>Daily reminders like "Autoplay is not consent" in minimalist dark/light designs</p>
+            </div>
+          </li>
+          <li>
+            <span class="bonus-icon">📄</span>
+            <div>
+              <strong>The 7-Day Detox Challenge</strong>
+              <p>Printable daily guide with prompts, trackers, and reflection boxes</p>
+            </div>
+          </li>
+          <li>
+            <span class="bonus-icon">📋</span>
+            <div>
+              <strong>Replacement Rituals Cheat Sheet</strong>
+              <p>Screen-free swaps for creativity, calm, and connection</p>
+            </div>
+          </li>
+          <li>
+            <span class="bonus-icon">🧠</span>
+            <div>
+              <strong>The Craving Circuit Poster</strong>
+              <p>Visual breakdown of the addictive loop—great for printing</p>
+            </div>
+          </li>
+          <li>
+            <span class="bonus-icon">⚙️</span>
+            <div>
+              <strong>The New Default Day Planner</strong>
+              <p>Editable rhythm-based template to rebuild your ideal routine</p>
+            </div>
+          </li>
+          <li>
+            <span class="bonus-icon">🧭</span>
+            <div>
+              <strong>Quick Start One-Pager</strong>
+              <p>Instant-action summary of the entire Unplug Your Brain strategy</p>
+            </div>
+          </li>
+          <li>
+            <span class="bonus-icon">🏅</span>
+            <div>
+              <strong>"I Beat the Loop" Certificate</strong>
+              <p>Printable completion badge—because progress deserves a trophy</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 Matt Livingston · <a href="mailto:matt@endscreenaddiction.com">matt@endscreenaddiction.com</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Generate stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      star.style.width = (Math.random() * 2 + 1) + 'px';
+      star.style.height = star.style.width;
+      starsContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>
