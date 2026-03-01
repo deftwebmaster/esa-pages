@@ -7,10 +7,11 @@
   --border: #222;
   --text: #e8e2d9;
   --muted: #6b6460;
-  --accent: #c8a96e;
-  --accent-dim: #7a6440;
+  --accent: #6b9fd4;
+  --accent-dim: #3d6a96;
   --font-display: 'Playfair Display', Georgia, serif;
   --font-mono: 'DM Mono', 'Courier New', monospace;
+  --font-body: 'JetBrains Mono', 'Courier New', monospace;
   --max: 720px;
   --pad: clamp(1.5rem, 5vw, 3rem);
 }
@@ -205,6 +206,7 @@ main { flex: 1; }
   font-size: 1rem;
   line-height: 1.85;
   color: #ccc8c2;
+  font-family: var(--font-body);
 }
 
 .article-body p { margin-bottom: 1.5rem; }
